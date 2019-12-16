@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // Allgemeine Informationen über eine Assembly werden über die folgenden 
@@ -10,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mijo Software")]
 [assembly: AssemblyProduct("Starcreate")]
-[assembly: AssemblyCopyright("Copyright © 2015 Michael Johne")]
+[assembly: AssemblyCopyright("Copyright © 2015-2019 Michael Johne")]
 [assembly: AssemblyTrademark("Starcreate")]
 [assembly: AssemblyCulture("")]
 
