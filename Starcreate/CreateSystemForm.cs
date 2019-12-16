@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Starcreate
@@ -14,172 +9,178 @@ namespace Starcreate
   /// </summary>
   public partial class CreateSystemForm : Form
   {
-    const double RADIANS_PER_ROTATION = (2.0 * Math.PI);
-    const double RAND_MAX = Int32.MaxValue;
-    const double ECCENTRICITY_COEFF = (.077); /* Dole's was 0.077 */
-    const double PROTOPLANET_MASS = (1.0E-15); /* Units of solar masses */
-    const double CHANGE_IN_EARTH_ANG_VEL = (-1.3E-15); /* Units of radians/sec/year */
-    const double SOLAR_MASS_IN_GRAMS = (1.989E33); /* Units of grams */
-    const double SOLAR_MASS_IN_KILOGRAMS = (1.989E30); /* Units of kg */
-    const double EARTH_MASS_IN_GRAMS = (5.977E27); /* Units of grams */
-    const double EARTH_RADIUS = (6.378E8); /* Units of cm */
-    const double EARTH_DENSITY = (5.52); /* Units of g/cc */
-    const double KM_EARTH_RADIUS = (6378.0); /* Units of km */
-    const double EARTH_ACCELERATION = (980.7); /* Units of cm/sec2 */
-    const double EARTH_AXIAL_TILT = (23.4); /* Units of degrees */
-    const double EARTH_EXOSPHERE_TEMP = (1273.0); /* Units of degrees Kelvin	*/
-    const double SUN_MASS_IN_EARTH_MASSES = (332775.64);
-    const double ASTEROID_MASS_LIMIT = (0.001); /* Units of Earth Masses */
-    const double EARTH_EFFECTIVE_TEMP = (250.0); /* Units of degrees Kelvin (was 255) */
-    const double CLOUD_COVERAGE_FACTOR = (1.839E-8); /* Km2/kg */
-    const double EARTH_WATER_MASS_PER_AREA = (3.83E15); /* grams per square km */
-    const double EARTH_SURF_PRES_IN_MILLIBARS = (1013.25);
-    const double EARTH_SURF_PRES_IN_MMHG = (760.0); /* Dole p. 15 */
-    const double EARTH_SURF_PRES_IN_PSI = (14.696); /* Pounds per square inch */
-    const double MMHG_TO_MILLIBARS = (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_MMHG);
-    const double PSI_TO_MILLIBARS = (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_PSI);
-    const double H20_ASSUMED_PRESSURE = (47.0 * MMHG_TO_MILLIBARS); /* Dole p. 15 */
-    const double MIN_O2_IPP = (72.0 * MMHG_TO_MILLIBARS); /* Dole, p. 15 */
-    const double MAX_O2_IPP = (400.0 * MMHG_TO_MILLIBARS); /* Dole, p. 15 */
-    const double MAX_HE_IPP = (61000.0 * MMHG_TO_MILLIBARS);/* Dole, p. 16 */
-    const double MAX_NE_IPP = (3900.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_N2_IPP = (2330.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_AR_IPP = (1220.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_KR_IPP = (350.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_XE_IPP = (160.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_CO2_IPP = (7.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
-    const double MAX_HABITABLE_PRESSURE = (118 * PSI_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double RADIANS_PER_ROTATION = 2.0 * Math.PI;
+    private const double RAND_MAX = int.MaxValue;
+    private const double ECCENTRICITY_COEFF = (.077); /* Dole's was 0.077 */
+    private const double PROTOPLANET_MASS = (1.0E-15); /* Units of solar masses */
+    private const double CHANGE_IN_EARTH_ANG_VEL = (-1.3E-15); /* Units of radians/sec/year */
+    private const double SOLAR_MASS_IN_GRAMS = (1.989E33); /* Units of grams */
+    private const double SOLAR_MASS_IN_KILOGRAMS = (1.989E30); /* Units of kg */
+    private const double EARTH_MASS_IN_GRAMS = (5.977E27); /* Units of grams */
+    private const double EARTH_RADIUS = (6.378E8); /* Units of cm */
+    private const double EARTH_DENSITY = (5.52); /* Units of g/cc */
+    private const double KM_EARTH_RADIUS = (6378.0); /* Units of km */
+    private const double EARTH_ACCELERATION = (980.7); /* Units of cm/sec2 */
+    private const double EARTH_AXIAL_TILT = (23.4); /* Units of degrees */
+    private const double EARTH_EXOSPHERE_TEMP = (1273.0); /* Units of degrees Kelvin	*/
+    private const double SUN_MASS_IN_EARTH_MASSES = (332775.64);
+    private const double ASTEROID_MASS_LIMIT = (0.001); /* Units of Earth Masses */
+    private const double EARTH_EFFECTIVE_TEMP = (250.0); /* Units of degrees Kelvin (was 255) */
+    private const double CLOUD_COVERAGE_FACTOR = (1.839E-8); /* Km2/kg */
+    private const double EARTH_WATER_MASS_PER_AREA = (3.83E15); /* grams per square km */
+    private const double EARTH_SURF_PRES_IN_MILLIBARS = (1013.25);
+    private const double EARTH_SURF_PRES_IN_MMHG = (760.0); /* Dole p. 15 */
+    private const double EARTH_SURF_PRES_IN_PSI = (14.696); /* Pounds per square inch */
+    private const double MMHG_TO_MILLIBARS = (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_MMHG);
+    private const double PSI_TO_MILLIBARS = (EARTH_SURF_PRES_IN_MILLIBARS / EARTH_SURF_PRES_IN_PSI);
+    private const double H20_ASSUMED_PRESSURE = (47.0 * MMHG_TO_MILLIBARS); /* Dole p. 15 */
+    private const double MIN_O2_IPP = (72.0 * MMHG_TO_MILLIBARS); /* Dole, p. 15 */
+    private const double MAX_O2_IPP = (400.0 * MMHG_TO_MILLIBARS); /* Dole, p. 15 */
+    private const double MAX_HE_IPP = (61000.0 * MMHG_TO_MILLIBARS);/* Dole, p. 16 */
+    private const double MAX_NE_IPP = (3900.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_N2_IPP = (2330.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_AR_IPP = (1220.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_KR_IPP = (350.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_XE_IPP = (160.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_CO2_IPP = (7.0 * MMHG_TO_MILLIBARS); /* Dole, p. 16 */
+    private const double MAX_HABITABLE_PRESSURE = (118 * PSI_TO_MILLIBARS); /* Dole, p. 16 */
     // The next gases are listed as poisonous in parts per million by volume at 1 atm:
-    const double PPM_PRSSURE = (EARTH_SURF_PRES_IN_MILLIBARS / 1000000.0);
-    const double MAX_F_IPP = (0.1 * PPM_PRSSURE); /* Dole, p. 18 */
-    const double MAX_CL_IPP = (1.0 * PPM_PRSSURE); /* Dole, p. 18 */
-    const double MAX_NH3_IPP = (100.0 * PPM_PRSSURE); /* Dole, p. 18 */
-    const double MAX_O3_IPP = (0.1 * PPM_PRSSURE); /* Dole, p. 18 */
-    const double MAX_CH4_IPP = (50000.0 * PPM_PRSSURE); /* Dole, p. 18 */
-    const double EARTH_CONVECTION_FACTOR = (0.43); /* from Hart, eq.20 */
-    const double FREEZING_POINT_OF_WATER = (273.15); /* Units of degrees Kelvin */
-    const double EARTH_AVERAGE_CELSIUS = (14.0); /* Average Earth Temperature */
-    const double EARTH_AVERAGE_KELVIN = (EARTH_AVERAGE_CELSIUS + FREEZING_POINT_OF_WATER);
-    const double DAYS_IN_A_YEAR = (365.256); /* Earth days per Earth year */
-    const double GAS_RETENTION_THRESHOLD = (6.0); /* ratio of esc vel to RMS vel */
-    const double ICE_ALBEDO = (0.7);
-    const double CLOUD_ALBEDO = (0.52);
-    const double GAS_GIANT_ALBEDO = (0.5); /* albedo of a gas giant */
-    const double AIRLESS_ICE_ALBEDO = (0.5);
-    const double EARTH_ALBEDO = (0.3);/* was .33 for a while */
-    const double GREENHOUSE_TRIGGER_ALBEDO = (0.20);
-    const double ROCKY_ALBEDO = (0.15);
-    const double ROCKY_AIRLESS_ALBEDO = (0.07);
-    const double WATER_ALBEDO = (0.04);
-    const double SECONDS_PER_HOUR = (3600.0);
-    const double CM_PER_AU = (1.495978707E13); /* number of cm in an AU */
-    const double CM_PER_KM = (1.0E5); /* number of cm in a km */
-    const double KM_PER_AU = (CM_PER_AU / CM_PER_KM);
-    const double CM_PER_METER = (100.0);
-    const double MILLIBARS_PER_BAR = (1000.00);
-    const double GRAV_CONSTANT = (6.672E-8); /* units of dyne cm2/gram2 */
-    const double MOLAR_GAS_CONST = (8314.41); /* units: g*m2/(sec2*K*mol) */
-    const double K = (50.0); /* K = gas/dust ratio */
-    const double B = (1.2E-5); /* Used in Crit_mass calc */
-    const double DUST_DENSITY_COEFF = (2.0E-3); /* A in Dole's paper */
-    const double ALPHA = (5.0); /* Used in density calcs */
-    const double N = (3.0); /* Used in density calcs */
-    const double J = (1.46E-19); /* Used in day-length calcs (cm2/sec2 g) */
-    const double INCREDIBLY_LARGE_NUMBER = (9.9999E37);
+
+    private const double PPM_PRSSURE = (EARTH_SURF_PRES_IN_MILLIBARS / 1000000.0);
+    private const double MAX_F_IPP = (0.1 * PPM_PRSSURE); /* Dole, p. 18 */
+    private const double MAX_CL_IPP = (1.0 * PPM_PRSSURE); /* Dole, p. 18 */
+    private const double MAX_NH3_IPP = (100.0 * PPM_PRSSURE); /* Dole, p. 18 */
+    private const double MAX_O3_IPP = (0.1 * PPM_PRSSURE); /* Dole, p. 18 */
+    private const double MAX_CH4_IPP = (50000.0 * PPM_PRSSURE); /* Dole, p. 18 */
+    private const double EARTH_CONVECTION_FACTOR = (0.43); /* from Hart, eq.20 */
+    private const double FREEZING_POINT_OF_WATER = (273.15); /* Units of degrees Kelvin */
+    private const double EARTH_AVERAGE_CELSIUS = (14.0); /* Average Earth Temperature */
+    private const double EARTH_AVERAGE_KELVIN = (EARTH_AVERAGE_CELSIUS + FREEZING_POINT_OF_WATER);
+    private const double DAYS_IN_A_YEAR = (365.256); /* Earth days per Earth year */
+    private const double GAS_RETENTION_THRESHOLD = (6.0); /* ratio of esc vel to RMS vel */
+    private const double ICE_ALBEDO = (0.7);
+    private const double CLOUD_ALBEDO = (0.52);
+    private const double GAS_GIANT_ALBEDO = (0.5); /* albedo of a gas giant */
+    private const double AIRLESS_ICE_ALBEDO = (0.5);
+    private const double EARTH_ALBEDO = (0.3);/* was .33 for a while */
+    private const double GREENHOUSE_TRIGGER_ALBEDO = (0.20);
+    private const double ROCKY_ALBEDO = (0.15);
+    private const double ROCKY_AIRLESS_ALBEDO = (0.07);
+    private const double WATER_ALBEDO = (0.04);
+    private const double SECONDS_PER_HOUR = (3600.0);
+    private const double CM_PER_AU = (1.495978707E13); /* number of cm in an AU */
+    private const double CM_PER_KM = (1.0E5); /* number of cm in a km */
+    private const double KM_PER_AU = (CM_PER_AU / CM_PER_KM);
+    private const double CM_PER_METER = (100.0);
+    private const double MILLIBARS_PER_BAR = (1000.00);
+    private const double GRAV_CONSTANT = (6.672E-8); /* units of dyne cm2/gram2 */
+    private const double MOLAR_GAS_CONST = (8314.41); /* units: g*m2/(sec2*K*mol) */
+    private const double K = (50.0); /* K = gas/dust ratio */
+    private const double B = (1.2E-5); /* Used in Crit_mass calc */
+    private const double DUST_DENSITY_COEFF = (2.0E-3); /* A in Dole's paper */
+    private const double ALPHA = (5.0); /* Used in density calcs */
+    private const double N = (3.0); /* Used in density calcs */
+    private const double J = (1.46E-19); /* Used in day-length calcs (cm2/sec2 g) */
+    private const double INCREDIBLY_LARGE_NUMBER = (9.9999E37);
+
     /* Now for a few molecular weights (used for RMS velocity calcs): */
     /* This table is from Dole's book "Habitable Planets for Man", p. 38 */
-    const double ATOMIC_HYDROGEN = (1.0); /* H */
-    const double MOL_HYDROGEN = (2.0); /* H2 */
-    const double HELIUM = (4.0); /* He */
-    const double ATOMIC_NITROGEN = (14.0); /* N */
-    const double ATOMIC_OXYGEN = (16.0); /* O */
-    const double METHANE = (16.0); /* CH4 */
-    const double AMMONIA = (17.0); /* NH3 */
-    const double WATER_VAPOR = (18.0); /* H2O */
-    const double NEON = (20.2); /* Ne */
-    const double MOL_NITROGEN = (28.0); /* N2 */
-    const double CARBON_MONOXIDE = (28.0); /* CO */
-    const double NITRIC_OXIDE = (30.0); /* NO */
-    const double MOL_OXYGEN = (32.0); /* O2 */
-    const double HYDROGEN_SULPHIDE = (34.1); /* H2S */
-    const double ARGON = (39.9); /* Ar */
-    const double CARBON_DIOXIDE = (44.0); /* CO2 */
-    const double NITROUS_OXIDE = (44.0); /* N2O */
-    const double NITROGEN_DIOXIDE = (46.0); /* NO2 */
-    const double OZONE = (48.0); /* O3 */
-    const double SULPH_DIOXIDE = (64.1); /* SO2 */
-    const double SULPH_TRIOXIDE = (80.1); /* SO3 */
-    const double KRYPTON = (83.8); /* Kr */
-    const double XENON = (131.3); /* Xe */
+    private const double ATOMIC_HYDROGEN = (1.0); /* H */
+    private const double MOL_HYDROGEN = (2.0); /* H2 */
+    private const double HELIUM = (4.0); /* He */
+    private const double ATOMIC_NITROGEN = (14.0); /* N */
+    private const double ATOMIC_OXYGEN = (16.0); /* O */
+    private const double METHANE = (16.0); /* CH4 */
+    private const double AMMONIA = (17.0); /* NH3 */
+    private const double WATER_VAPOR = (18.0); /* H2O */
+    private const double NEON = (20.2); /* Ne */
+    private const double MOL_NITROGEN = (28.0); /* N2 */
+    private const double CARBON_MONOXIDE = (28.0); /* CO */
+    private const double NITRIC_OXIDE = (30.0); /* NO */
+    private const double MOL_OXYGEN = (32.0); /* O2 */
+    private const double HYDROGEN_SULPHIDE = (34.1); /* H2S */
+    private const double ARGON = (39.9); /* Ar */
+    private const double CARBON_DIOXIDE = (44.0); /* CO2 */
+    private const double NITROUS_OXIDE = (44.0); /* N2O */
+    private const double NITROGEN_DIOXIDE = (46.0); /* NO2 */
+    private const double OZONE = (48.0); /* O3 */
+    private const double SULPH_DIOXIDE = (64.1); /* SO2 */
+    private const double SULPH_TRIOXIDE = (80.1); /* SO3 */
+    private const double KRYPTON = (83.8); /* Kr */
+    private const double XENON = (131.3); /* Xe */
     // And atomic numbers, for use in ChemTable indexes
-    const int AN_H = 1;
-    const int AN_HE = 2;
-    const int AN_N = 7;
-    const int AN_O = 8;
-    const int AN_F = 9;
-    const int AN_NE = 10;
-    const int AN_P = 15;
-    const int AN_CL = 17;
-    const int AN_AR = 18;
-    const int AN_BR = 35;
-    const int AN_KR = 36;
-    const int AN_I = 53;
-    const int AN_XE = 54;
-    const int AN_HG = 80;
-    const int AN_AT = 85;
-    const int AN_RN = 86;
-    const int AN_FR = 87;
-    const int AN_NH3 = 900;
-    const int AN_H2O = 901;
-    const int AN_CO2 = 902;
-    const int AN_O3 = 903;
-    const int AN_CH4 = 904;
-    const int AN_CH3CH2OH = 905;
+
+    private const int AN_H = 1;
+    private const int AN_HE = 2;
+    private const int AN_N = 7;
+    private const int AN_O = 8;
+    private const int AN_F = 9;
+    private const int AN_NE = 10;
+    private const int AN_P = 15;
+    private const int AN_CL = 17;
+    private const int AN_AR = 18;
+    private const int AN_BR = 35;
+    private const int AN_KR = 36;
+    private const int AN_I = 53;
+    private const int AN_XE = 54;
+    private const int AN_HG = 80;
+    private const int AN_AT = 85;
+    private const int AN_RN = 86;
+    private const int AN_FR = 87;
+    private const int AN_NH3 = 900;
+    private const int AN_H2O = 901;
+    private const int AN_CO2 = 902;
+    private const int AN_O3 = 903;
+    private const int AN_CH4 = 904;
+    private const int AN_CH3CH2OH = 905;
+
     /* The following defines are used in the kothari_radius function in */
     /* file enviro.c. */
-    const double A1_20 = (6.485E12); /* All units are in cgs system. */
-    const double A2_20 = (4.0032E-8); /* ie: cm, g, dynes, etc. */
-    const double BETA_20 = (5.71E12);
-    const double JIMS_FUDGE = (1.004);
+    private const double A1_20 = (6.485E12); /* All units are in cgs system. */
+    private const double A2_20 = (4.0032E-8); /* ie: cm, g, dynes, etc. */
+    private const double BETA_20 = (5.71E12);
+    private const double JIMS_FUDGE = (1.004);
+
     /* The following defines are used in determining the fraction of a planet */
     /* covered with clouds in function cloud_fraction in file enviro.c. */
-    const double Q1_36 = (1.258E19); /* grams */
-    const double Q2_36 = (0.0698); /* 1/Kelvin */
-    const int NONE = 0;
-    const int BREATHABLE = 1;
-    const int UNBREATHABLE = 2;
-    const int POISONOUS = 3;
-    const int fUseSolarsystem = 0x0001;
-    const int fReuseSolarsystem = 0x0002;
-    const int fUseKnownPlanets = 0x0004;
-    const int fNoGenerate = 0x0008;
-    const int fDoGases = 0x0010;
-    const int fDoMoons = 0x0020;
-    const int fOnlyHabitable = 0x0100;
-    const int fOnlyMultiHabitable = 0x0200;
-    const int fOnlyJovianHabitabl = 0x0400;
-    const int fOnlyEarthlike = 0x0800;
-    // Values of out_format
-    const string ffHTML = "HTML";
-    const string ffTEXT = "TEXT";
-    const string ffCELESTIA = ".SSC";
-    const string ffCSV = ".CSV";
-    const string ffCSVdl = "+CSV";
-    const string ffSVG = ".SVG";
-    // Values of graphic_format
-    const string gfGIF = ".GIF";
-    const string gfSVG = ".SVG";
+    private const double Q1_36 = (1.258E19); /* grams */
+    private const double Q2_36 = (0.0698); /* 1/Kelvin */
+    private const int NONE = 0;
+    private const int BREATHABLE = 1;
+    private const int UNBREATHABLE = 2;
+    private const int POISONOUS = 3;
+    private const int fUseSolarsystem = 0x0001;
+    private const int fReuseSolarsystem = 0x0002;
+    private const int fUseKnownPlanets = 0x0004;
+    private const int fNoGenerate = 0x0008;
+    private const int fDoGases = 0x0010;
+    private const int fDoMoons = 0x0020;
+    private const int fOnlyHabitable = 0x0100;
+    private const int fOnlyMultiHabitable = 0x0200;
+    private const int fOnlyJovianHabitabl = 0x0400;
+    private const int fOnlyEarthlike = 0x0800;
 
-    int max_gas = 14;
-    bool dust_left;
-    double r_inner;
-    double r_outer;
-    double reduced_mass;
-    double dust_density;
-    double cloud_eccentricity;
-    dust_record dust_head;
-    planet_record planet_head;
-    gen hist_head;
+    // Values of out_format
+    private const string ffHTML = "HTML";
+    private const string ffTEXT = "TEXT";
+    private const string ffCELESTIA = ".SSC";
+    private const string ffCSV = ".CSV";
+    private const string ffCSVdl = "+CSV";
+    private const string ffSVG = ".SVG";
+
+    // Values of graphic_format
+    private const string gfGIF = ".GIF";
+    private const string gfSVG = ".SVG";
+    private readonly int max_gas = 14;
+    private bool dust_left;
+    private double r_inner;
+    private double r_outer;
+    private double reduced_mass;
+    private readonly double dust_density;
+    private double cloud_eccentricity;
+    private dust_record dust_head;
+    private planet_record planet_head;
+    private gen hist_head;
 
     /// <summary>
     /// 
@@ -308,7 +309,7 @@ namespace Starcreate
       public bool gas_giant;      /* TRUE if the planet is a gas giant */
       public double dust_mass;      /* mass, ignoring gas				 */
       public double gas_mass;     /* mass, ignoring dust				 */
-                                  /*   ZEROES start here               */
+      /*   ZEROES start here               */
       public double moon_a;       /* semi-major axis of lunar orbit (in AU)*/
       public double moon_e;       /* eccentricity of lunar orbit		 */
       public double core_radius;    /* radius of the rocky core (in km)	 */
@@ -431,7 +432,7 @@ namespace Starcreate
     /// <summary>
     /// 
     /// </summary>
-    ChemTable[] gases = new ChemTable[14];
+    private readonly ChemTable[] gases = new ChemTable[14];
 
     /// <summary>
     /// This is the constructor of the class 'CreateSystemForm'.
@@ -549,7 +550,11 @@ namespace Starcreate
     {
       //double result = 1.0 - Math.Pow(randomNumber(0.0, 1.0), ECCENTRICITY_COEFF);
       double result = 1.0 - Math.Pow(randomNumber(0.0, 1.0), (double)numericUpDownEccentricityCoeff.Value);
-      if (result > 0.99) result = 0.99;
+      if (result > 0.99)
+      {
+        result = 0.99;
+      }
+
       return result;
     }
 
@@ -562,9 +567,14 @@ namespace Starcreate
     {
       double n;
       if (mass_ratio < 1.0)
+      {
         n = 1.75 * (mass_ratio - 0.1) + 3.325;
+      }
       else
+      {
         n = 0.5 * (2.0 - mass_ratio) + 4.4;
+      }
+
       return Math.Pow(mass_ratio, n);
     }
 
@@ -577,11 +587,17 @@ namespace Starcreate
     private int orb_zone(double luminosity, double orb_radius)
     {
       if (orb_radius < (4.0 * Math.Sqrt(luminosity)))
+      {
         return (1);
+      }
       else if (orb_radius < (15.0 * Math.Sqrt(luminosity)))
+      {
         return (2);
+      }
       else
+      {
         return (3);
+      }
     }
 
     /// <summary>
@@ -618,7 +634,9 @@ namespace Starcreate
         {
           atomic_weight = 9.5;
           atomic_num = 4.5;
-        } else {
+        }
+        else
+        {
           atomic_weight = 15.0;
           atomic_num = 8.0;
         }
@@ -629,11 +647,15 @@ namespace Starcreate
         {
           atomic_weight = 2.47;
           atomic_num = 2.0;
-        } else {
+        }
+        else
+        {
           atomic_weight = 10.0;
           atomic_num = 5.0;
         }
-      } else {
+      }
+      else
+      {
         if (giant == 1)
         {
           atomic_weight = 7.0;
@@ -671,9 +693,13 @@ namespace Starcreate
       temp = Math.Pow(mass * SUN_MASS_IN_EARTH_MASSES, (1.0 / 8.0));
       temp = temp * Pow1_4(r_ecosphere / orb_radius);
       if (gas_giant == 1)
+      {
         return (temp * 1.2);
+      }
       else
+      {
         return (temp * 5.5);
+      }
     }
 
     /// <summary>
@@ -726,7 +752,15 @@ namespace Starcreate
       double day_in_hours;
       bool stopped = false;
       planet.resonant_period = false;  /* Warning: Modify the planet */
-      if (giant) k2 = 0.24; else k2 = 0.33;
+      if (giant)
+      {
+        k2 = 0.24;
+      }
+      else
+      {
+        k2 = 0.33;
+      }
+
       base_angular_velocity = Math.Sqrt(2.0 * J * (planetary_mass_in_grams) / (k2 * Pow2(equatorial_radius_in_cm)));
       /* This next calculation determines how much the planet's rotation is lowed by the presence of the star. */
       change_in_angular_velocity = CHANGE_IN_EARTH_ANG_VEL * (planet.density / EARTH_DENSITY) * (equatorial_radius_in_cm / EARTH_RADIUS) * (EARTH_MASS_IN_GRAMS / planetary_mass_in_grams) * Math.Pow(planet.sun.mass, 2.0) * (1.0 / Math.Pow(planet.a, 6.0));
@@ -736,7 +770,12 @@ namespace Starcreate
       {
         stopped = true;
         day_in_hours = INCREDIBLY_LARGE_NUMBER;
-      } else day_in_hours = RADIANS_PER_ROTATION / (SECONDS_PER_HOUR * ang_velocity);
+      }
+      else
+      {
+        day_in_hours = RADIANS_PER_ROTATION / (SECONDS_PER_HOUR * ang_velocity);
+      }
+
       if ((day_in_hours >= year_in_hours) || stopped)
       {
         if (planet.e > 0.1)
@@ -745,7 +784,10 @@ namespace Starcreate
           planet.resonant_period = true;
           return (spin_resonance_factor * year_in_hours);
         }
-        else return year_in_hours;
+        else
+        {
+          return year_in_hours;
+        }
       }
       return day_in_hours;
     }
@@ -865,11 +907,18 @@ namespace Starcreate
         temp2 = about(temp1, 0.2);
         temp2 = temp1;
         if (greenhouse_effect || accreted_gas)
+        {
           return temp2;
+        }
         else
+        {
           return temp2 / 140.0; /* 100 -> 140 JLB */
+        }
       }
-      else return 0.0;
+      else
+      {
+        return 0.0;
+      }
     }
 
     /// <summary>
@@ -910,9 +959,13 @@ namespace Starcreate
       temp = (0.71 * volatile_gas_inventory / 1000.0)
            * Pow2(KM_EARTH_RADIUS / planet_radius);
       if (temp >= 1.0)
+      {
         return 1.0;
+      }
       else
+      {
         return temp;
+      }
     }
 
     /// <summary>
@@ -930,7 +983,9 @@ namespace Starcreate
     {
       double water_vapor_in_kg, fraction, surf_area, hydro_mass;
       if (smallest_MW_retained > WATER_VAPOR)
+      {
         return 0.0;
+      }
       else
       {
         surf_area = 4.0 * Math.PI * Pow2(equat_radius);
@@ -938,9 +993,13 @@ namespace Starcreate
         water_vapor_in_kg = (0.00000001 * hydro_mass) * Math.Exp(Q2_36 * (surf_temp - EARTH_AVERAGE_KELVIN));
         fraction = CLOUD_COVERAGE_FACTOR * water_vapor_in_kg / surf_area;
         if (fraction >= 1.0)
+        {
           return 1.0;
+        }
         else
+        {
           return fraction;
+        }
       }
     }
 
@@ -955,13 +1014,25 @@ namespace Starcreate
     private double ice_fraction(double hydro_fraction, double surf_temp)
     {
       double temp;
-      if (surf_temp > 328.0) surf_temp = 328.0;
+      if (surf_temp > 328.0)
+      {
+        surf_temp = 328.0;
+      }
+
       temp = Math.Pow(((328.0 - surf_temp) / 90.0), 5.0);
-      if (temp > (1.5 * hydro_fraction)) temp = (1.5 * hydro_fraction);
+      if (temp > (1.5 * hydro_fraction))
+      {
+        temp = (1.5 * hydro_fraction);
+      }
+
       if (temp >= 1.0)
+      {
         return 1.0;
+      }
       else
+      {
         return temp;
+      }
     }
 
     /// <summary>
@@ -1001,9 +1072,13 @@ namespace Starcreate
     {
       double temp = eff_temp(r_ecosphere, orb_radius, GREENHOUSE_TRIGGER_ALBEDO);
       if (temp > FREEZING_POINT_OF_WATER)
+      {
         return true;
+      }
       else
+      {
         return false;
+      }
     }
 
     /// <summary>
@@ -1018,7 +1093,11 @@ namespace Starcreate
     {
       double convection_factor = EARTH_CONVECTION_FACTOR * Math.Pow(surf_pressure / EARTH_SURF_PRES_IN_MILLIBARS, 0.4);
       double rise = (Pow1_4(1.0 + 0.75 * optical_depth) - 1.0) * effective_temp * convection_factor;
-      if (rise < 0.0) rise = 0.0;
+      if (rise < 0.0)
+      {
+        rise = 0.0;
+      }
+
       return rise;
     }
 
@@ -1037,20 +1116,58 @@ namespace Starcreate
 
       rock_fraction = 1.0 - water_fraction - ice_fraction;
       components = 0.0;
-      if (water_fraction > 0.0) components = components + 1.0;
-      if (ice_fraction > 0.0) components = components + 1.0;
-      if (rock_fraction > 0.0) components = components + 1.0;
+      if (water_fraction > 0.0)
+      {
+        components = components + 1.0;
+      }
+
+      if (ice_fraction > 0.0)
+      {
+        components = components + 1.0;
+      }
+
+      if (rock_fraction > 0.0)
+      {
+        components = components + 1.0;
+      }
+
       cloud_adjustment = cloud_fraction / components;
-      if (rock_fraction >= cloud_adjustment) rock_fraction = rock_fraction - cloud_adjustment; else rock_fraction = 0.0;
-      if (water_fraction > cloud_adjustment) water_fraction = water_fraction - cloud_adjustment; else water_fraction = 0.0;
-      if (ice_fraction > cloud_adjustment) ice_fraction = ice_fraction - cloud_adjustment; else ice_fraction = 0.0;
+      if (rock_fraction >= cloud_adjustment)
+      {
+        rock_fraction = rock_fraction - cloud_adjustment;
+      }
+      else
+      {
+        rock_fraction = 0.0;
+      }
+
+      if (water_fraction > cloud_adjustment)
+      {
+        water_fraction = water_fraction - cloud_adjustment;
+      }
+      else
+      {
+        water_fraction = 0.0;
+      }
+
+      if (ice_fraction > cloud_adjustment)
+      {
+        ice_fraction = ice_fraction - cloud_adjustment;
+      }
+      else
+      {
+        ice_fraction = 0.0;
+      }
+
       cloud_part = cloud_fraction * CLOUD_ALBEDO;   /* about(...,0.2); */
       if (surf_pressure == 0.0)
       {
         rock_part = rock_fraction * ROCKY_AIRLESS_ALBEDO; /* about(...,0.3); */
         ice_part = ice_fraction * AIRLESS_ICE_ALBEDO;   /* about(...,0.4); */
         water_part = 0;
-      } else {
+      }
+      else
+      {
         rock_part = rock_fraction * ROCKY_ALBEDO; /* about(...,0.1); */
         water_part = water_fraction * WATER_ALBEDO; /* about(...,0.2); */
         ice_part = ice_fraction * ICE_ALBEDO;   /* about(...,0.1); */
@@ -1068,16 +1185,52 @@ namespace Starcreate
     {
       double optical_depth;
       optical_depth = 0.0;
-      if ((molecular_weight >= 0.0) && (molecular_weight < 10.0)) optical_depth = optical_depth + 3.0;
-      if ((molecular_weight >= 10.0) && (molecular_weight < 20.0)) optical_depth = optical_depth + 2.34;
-      if ((molecular_weight >= 20.0) && (molecular_weight < 30.0)) optical_depth = optical_depth + 1.0;
-      if ((molecular_weight >= 30.0) && (molecular_weight < 45.0)) optical_depth = optical_depth + 0.15;
-      if ((molecular_weight >= 45.0) && (molecular_weight < 100.0)) optical_depth = optical_depth + 0.05;
-      if (surf_pressure >= (70.0 * EARTH_SURF_PRES_IN_MILLIBARS)) optical_depth = optical_depth * 8.333;
-      else if (surf_pressure >= (50.0 * EARTH_SURF_PRES_IN_MILLIBARS)) optical_depth = optical_depth * 6.666;
-      else if (surf_pressure >= (30.0 * EARTH_SURF_PRES_IN_MILLIBARS)) optical_depth = optical_depth * 3.333;
-      else if (surf_pressure >= (10.0 * EARTH_SURF_PRES_IN_MILLIBARS)) optical_depth = optical_depth * 2.0;
-      else if (surf_pressure >= (5.0 * EARTH_SURF_PRES_IN_MILLIBARS)) optical_depth = optical_depth * 1.5;
+      if ((molecular_weight >= 0.0) && (molecular_weight < 10.0))
+      {
+        optical_depth = optical_depth + 3.0;
+      }
+
+      if ((molecular_weight >= 10.0) && (molecular_weight < 20.0))
+      {
+        optical_depth = optical_depth + 2.34;
+      }
+
+      if ((molecular_weight >= 20.0) && (molecular_weight < 30.0))
+      {
+        optical_depth = optical_depth + 1.0;
+      }
+
+      if ((molecular_weight >= 30.0) && (molecular_weight < 45.0))
+      {
+        optical_depth = optical_depth + 0.15;
+      }
+
+      if ((molecular_weight >= 45.0) && (molecular_weight < 100.0))
+      {
+        optical_depth = optical_depth + 0.05;
+      }
+
+      if (surf_pressure >= (70.0 * EARTH_SURF_PRES_IN_MILLIBARS))
+      {
+        optical_depth = optical_depth * 8.333;
+      }
+      else if (surf_pressure >= (50.0 * EARTH_SURF_PRES_IN_MILLIBARS))
+      {
+        optical_depth = optical_depth * 6.666;
+      }
+      else if (surf_pressure >= (30.0 * EARTH_SURF_PRES_IN_MILLIBARS))
+      {
+        optical_depth = optical_depth * 3.333;
+      }
+      else if (surf_pressure >= (10.0 * EARTH_SURF_PRES_IN_MILLIBARS))
+      {
+        optical_depth = optical_depth * 2.0;
+      }
+      else if (surf_pressure >= (5.0 * EARTH_SURF_PRES_IN_MILLIBARS))
+      {
+        optical_depth = optical_depth * 1.5;
+      }
+
       return optical_depth;
     }
 
@@ -1105,7 +1258,11 @@ namespace Starcreate
       //		fprintf (stderr, "gas_life: %LGs, V ratio: %Lf\n", 
       //				years, ve / v);
 
-      if (years > 2.0E10) years = INCREDIBLY_LARGE_NUMBER;
+      if (years > 2.0E10)
+      {
+        years = INCREDIBLY_LARGE_NUMBER;
+      }
+
       return years;
     }
 
@@ -1133,7 +1290,9 @@ namespace Starcreate
           guess_1 = guess_1 / 2.0;
           life = gas_life(guess_1, planet);
         }
-      } else {
+      }
+      else
+      {
         while ((life < target) && (loops++ < 25))
         {
           guess_2 = guess_2 * 2.0;
@@ -1145,7 +1304,14 @@ namespace Starcreate
       {
         double guess_3 = (guess_1 + guess_2) / 2.0;
         life = gas_life(guess_3, planet);
-        if (life < target) guess_1 = guess_3; else guess_2 = guess_3;
+        if (life < target)
+        {
+          guess_1 = guess_3;
+        }
+        else
+        {
+          guess_2 = guess_3;
+        }
       }
       life = gas_life(guess_2, planet);
       return guess_2;
@@ -1173,7 +1339,11 @@ namespace Starcreate
     {
       bool oxygen_ok = false;
       int index;
-      if (planet.gases == 0) return NONE;
+      if (planet.gases == 0)
+      {
+        return NONE;
+      }
+
       for (index = 0; index < planet.gases; index++)
       {
         int n;
@@ -1181,16 +1351,29 @@ namespace Starcreate
         double ipp = inspired_partial_pressure(planet.surf_pressure, planet.atmosphere.surf_pressure);
         for (n = 0; n < max_gas; n++)
         {
-          if (gases[n].num == planet.atmosphere.num) gas_no = n;
+          if (gases[n].num == planet.atmosphere.num)
+          {
+            gas_no = n;
+          }
         }
-        if (ipp > gases[gas_no].max_ipp) return POISONOUS;
+        if (ipp > gases[gas_no].max_ipp)
+        {
+          return POISONOUS;
+        }
 
-        if (planet.atmosphere.num == AN_O) oxygen_ok = ((ipp >= MIN_O2_IPP) && (ipp <= MAX_O2_IPP));
+        if (planet.atmosphere.num == AN_O)
+        {
+          oxygen_ok = ((ipp >= MIN_O2_IPP) && (ipp <= MAX_O2_IPP));
+        }
       }
       if (oxygen_ok)
+      {
         return BREATHABLE;
+      }
       else
+      {
         return UNBREATHABLE;
+      }
     }
 
     /// <summary>
@@ -1235,8 +1418,16 @@ namespace Starcreate
       double wl = lo - Math.Pow((150 + lo) * tiltmod, Math.Sqrt(ppmod));
       double max = planet.surf_temp + Math.Sqrt(planet.surf_temp) * 10;
       double min = planet.surf_temp / Math.Sqrt(planet.day + 24);
-      if (lo < min) lo = min;
-      if (wl < 0) wl = 0;
+      if (lo < min)
+      {
+        lo = min;
+      }
+
+      if (wl < 0)
+      {
+        wl = 0;
+      }
+
       planet.high_temp = soft(hi, max, min);
       planet.low_temp = soft(lo, max, min);
       planet.max_temp = soft(sh, max, min);
@@ -1291,24 +1482,40 @@ namespace Starcreate
       water_raw = planet.hydrosphere = hydro_fraction(planet.volatile_gas_inventory, planet.radius);
       clouds_raw = planet.cloud_cover = cloud_fraction(planet.surf_temp, planet.molec_weight, planet.radius, planet.hydrosphere);
       planet.ice_cover = ice_fraction(planet.hydrosphere, planet.surf_temp);
-      if ((planet.greenhouse_effect) && (planet.surf_pressure > 0.0)) planet.cloud_cover = 1.0;
+      if ((planet.greenhouse_effect) && (planet.surf_pressure > 0.0))
+      {
+        planet.cloud_cover = 1.0;
+      }
+
       if ((planet.high_temp >= planet.boil_point) && (!first) && !((int)planet.day == (int)(planet.orb_period * 24.0) || (planet.resonant_period)))
       {
         planet.hydrosphere = 0.0;
         boil_off = true;
         if (planet.molec_weight > WATER_VAPOR)
+        {
           planet.cloud_cover = 0.0;
+        }
         else
+        {
           planet.cloud_cover = 1.0;
+        }
       }
-      if (planet.surf_temp < (FREEZING_POINT_OF_WATER - 3.0)) planet.hydrosphere = 0.0;
+      if (planet.surf_temp < (FREEZING_POINT_OF_WATER - 3.0))
+      {
+        planet.hydrosphere = 0.0;
+      }
+
       planet.albedo = planet_albedo(planet.hydrosphere, planet.cloud_cover, planet.ice_cover, planet.surf_pressure);
       effective_temp = eff_temp(planet.sun.r_ecosphere, planet.a, planet.albedo);
       greenhouse_temp = green_rise(opacity(planet.molec_weight, planet.surf_pressure), effective_temp, planet.surf_pressure);
       planet.surf_temp = effective_temp + greenhouse_temp;
       if (!first)
       {
-        if (!boil_off) planet.hydrosphere = (planet.hydrosphere + (last_water * 2)) / 3;
+        if (!boil_off)
+        {
+          planet.hydrosphere = (planet.hydrosphere + (last_water * 2)) / 3;
+        }
+
         planet.cloud_cover = (planet.cloud_cover + (last_clouds * 2)) / 3;
         planet.ice_cover = (planet.ice_cover + (last_ice * 2)) / 3;
         planet.albedo = (planet.albedo + (last_albedo * 2)) / 3;
@@ -1355,7 +1562,10 @@ namespace Starcreate
         double last_temp = planet.surf_temp;
         double last_albedo = planet.albedo;
         calculate_surface_temp(planet, false, last_water, last_clouds, last_ice, last_temp, last_albedo);
-        if (Math.Abs(planet.surf_temp - last_temp) < 0.25) break;
+        if (Math.Abs(planet.surf_temp - last_temp) < 0.25)
+        {
+          break;
+        }
       }
       planet.greenhs_rise = planet.surf_temp - initial_temp;
       /*if (flag_verbose & 0x20000)
@@ -1491,9 +1701,14 @@ namespace Starcreate
 
       dust_left = false;
       if ((mass > crit_mass))
+      {
         gas = false;
+      }
       else
+      {
         gas = true;
+      }
+
       node1 = dust_head;
       /*
       while ((node1 != NULL))
@@ -1618,7 +1833,10 @@ namespace Starcreate
       reduced_mass = Math.Pow(temp, (1.0 / 4.0));
       r_inner = inner_effect_limit(a, e, reduced_mass);
       r_outer = outer_effect_limit(a, e, reduced_mass);
-      if (r_inner < 0.0) r_inner = 0.0;
+      if (r_inner < 0.0)
+      {
+        r_inner = 0.0;
+      }
 
       /*
       if ((dust_band == NULL))
@@ -1711,7 +1929,8 @@ namespace Starcreate
     {
       double new_mass = (seed_mass);
       double temp_mass;
-      do {
+      do
+      {
         temp_mass = new_mass;
         new_mass = collect_dust(new_mass, new_dust, new_gas,
                     a, e, crit_mass, dust_head);
@@ -1876,53 +2095,53 @@ namespace Starcreate
             }
           }*/
 
-          /*if (!finished)
-          {
-            if (flag_verbose & 0x0100)
-              fprintf(stderr, "Collision between two planetesimals! "
-                  "%4.2Lf AU (%.2LfEM) + %4.2Lf AU (%.2LfEM = %.2LfEMd + %.2LfEMg [%.3LfEM]). %5.3Lf AU (%5.3Lf)\n",
-                  the_planet.a, the_planet.mass * SUN_MASS_IN_EARTH_MASSES,
-                  a, mass * SUN_MASS_IN_EARTH_MASSES,
-                  dust_mass * SUN_MASS_IN_EARTH_MASSES, gas_mass * SUN_MASS_IN_EARTH_MASSES,
-                  crit_mass * SUN_MASS_IN_EARTH_MASSES,
-                  new_a, e);
+      /*if (!finished)
+      {
+        if (flag_verbose & 0x0100)
+          fprintf(stderr, "Collision between two planetesimals! "
+              "%4.2Lf AU (%.2LfEM) + %4.2Lf AU (%.2LfEM = %.2LfEMd + %.2LfEMg [%.3LfEM]). %5.3Lf AU (%5.3Lf)\n",
+              the_planet.a, the_planet.mass * SUN_MASS_IN_EARTH_MASSES,
+              a, mass * SUN_MASS_IN_EARTH_MASSES,
+              dust_mass * SUN_MASS_IN_EARTH_MASSES, gas_mass * SUN_MASS_IN_EARTH_MASSES,
+              crit_mass * SUN_MASS_IN_EARTH_MASSES,
+              new_a, e);
 
-            temp = the_planet.mass + mass;
-            accrete_dust(temp, new_dust, new_gas,
-                   new_a, e, stell_luminosity_ratio,
-                   body_inner_bound, body_outer_bound);
+        temp = the_planet.mass + mass;
+        accrete_dust(temp, new_dust, new_gas,
+               new_a, e, stell_luminosity_ratio,
+               body_inner_bound, body_outer_bound);
 
-            the_planet.a = new_a;
-            the_planet.e = e;
-            the_planet.mass = temp;
-            the_planet.dust_mass += dust_mass + new_dust;
-            the_planet.gas_mass += gas_mass + new_gas;
-            if (temp >= crit_mass)
-              the_planet.gas_giant = true;
+        the_planet.a = new_a;
+        the_planet.e = e;
+        the_planet.mass = temp;
+        the_planet.dust_mass += dust_mass + new_dust;
+        the_planet.gas_mass += gas_mass + new_gas;
+        if (temp >= crit_mass)
+          the_planet.gas_giant = true;
 
-            while (the_planet.next_planet != NULL && the_planet.next_planet.a < new_a)
-            {
-              next_planet = the_planet.next_planet;
-
-              if (the_planet == planet_head)
-                planet_head = next_planet;
-              else
-                prev_planet.next_planet = next_planet;
-
-              the_planet.next_planet = next_planet.next_planet;
-              next_planet.next_planet = the_planet;
-              prev_planet = next_planet;
-            }
-          }
-
-          finished = true;
-          break;
-        }
-        else
+        while (the_planet.next_planet != NULL && the_planet.next_planet.a < new_a)
         {
-          prev_planet = the_planet;
+          next_planet = the_planet.next_planet;
+
+          if (the_planet == planet_head)
+            planet_head = next_planet;
+          else
+            prev_planet.next_planet = next_planet;
+
+          the_planet.next_planet = next_planet.next_planet;
+          next_planet.next_planet = the_planet;
+          prev_planet = next_planet;
         }
-      }*/
+      }
+
+      finished = true;
+      break;
+    }
+    else
+    {
+      prev_planet = the_planet;
+    }
+  }*/
 
       /*if (!(finished))      // Planetesimals didn't collide. Make it a planet.
       {
@@ -1981,7 +2200,7 @@ namespace Starcreate
       }*/
     }
 
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -2010,52 +2229,56 @@ namespace Starcreate
       planet_inner_bound = nearest_planet(stell_mass_ratio);
 
       if (outer_planet_limit == 0)
-        planet_outer_bound = farthest_planet(stell_mass_ratio);
-      else
-        planet_outer_bound = outer_planet_limit;
-
-     /*
-     while (dust_left)
       {
-        if (seeds != NULL)
-        {
-          a = seeds.a;
-          e = seeds.e;
-          seeds = seeds.next_planet;
-        }
-        else
-        {
-          a = randomNumber(planet_inner_bound, planet_outer_bound);
-          e = randomEccentricity();
-        }
+        planet_outer_bound = farthest_planet(stell_mass_ratio);
+      }
+      else
+      {
+        planet_outer_bound = outer_planet_limit;
+      }
 
-        mass = PROTOPLANET_MASS;
-        dust_mass = 0;
-        gas_mass = 0;
+      /*
+      while (dust_left)
+       {
+         if (seeds != NULL)
+         {
+           a = seeds.a;
+           e = seeds.e;
+           seeds = seeds.next_planet;
+         }
+         else
+         {
+           a = randomNumber(planet_inner_bound, planet_outer_bound);
+           e = randomEccentricity();
+         }
 
-        if (flag_verbose & 0x0200)
-          fprintf(stderr, "Checking %Lg AU.\n", a);
+         mass = PROTOPLANET_MASS;
+         dust_mass = 0;
+         gas_mass = 0;
 
-        if (dust_available(inner_effect_limit(a, e, mass),
-                   outer_effect_limit(a, e, mass)))
-        {
-          if (flag_verbose & 0x0100)
-            fprintf(stderr, "Injecting protoplanet at %Lg AU.\n", a);
+         if (flag_verbose & 0x0200)
+           fprintf(stderr, "Checking %Lg AU.\n", a);
 
-          dust_density = dust_density_coeff * Math.Sqrt(stell_mass_ratio)
-                   * Math.Exp(-ALPHA * Math.Pow(a, (1.0 / N)));
-          crit_mass = critical_limit(a, e, stell_luminosity_ratio);
-          accrete_dust(mass, dust_mass, gas_mass, a, e, crit_mass, planet_inner_bound, planet_outer_bound);
+         if (dust_available(inner_effect_limit(a, e, mass),
+                    outer_effect_limit(a, e, mass)))
+         {
+           if (flag_verbose & 0x0100)
+             fprintf(stderr, "Injecting protoplanet at %Lg AU.\n", a);
 
-          dust_mass += PROTOPLANET_MASS;
+           dust_density = dust_density_coeff * Math.Sqrt(stell_mass_ratio)
+                    * Math.Exp(-ALPHA * Math.Pow(a, (1.0 / N)));
+           crit_mass = critical_limit(a, e, stell_luminosity_ratio);
+           accrete_dust(mass, dust_mass, gas_mass, a, e, crit_mass, planet_inner_bound, planet_outer_bound);
 
-          if (mass > PROTOPLANET_MASS) coalesce_planetesimals(a, e, mass, crit_mass,dust_mass, gas_mass, stell_luminosity_ratio, planet_inner_bound, planet_outer_bound, do_moons);
-          else if (flag_verbose & 0x0100)
-            fprintf(stderr, ".. failed due to large neighbor.\n");
-        }
-        else if (flag_verbose & 0x0200)
-          fprintf(stderr, ".. failed.\n");
-      }*/
+           dust_mass += PROTOPLANET_MASS;
+
+           if (mass > PROTOPLANET_MASS) coalesce_planetesimals(a, e, mass, crit_mass,dust_mass, gas_mass, stell_luminosity_ratio, planet_inner_bound, planet_outer_bound, do_moons);
+           else if (flag_verbose & 0x0100)
+             fprintf(stderr, ".. failed due to large neighbor.\n");
+         }
+         else if (flag_verbose & 0x0200)
+           fprintf(stderr, ".. failed.\n");
+       }*/
       return planet_head;
     }
 
@@ -2120,7 +2343,7 @@ namespace Starcreate
     /// 
     /// </summary>
     /// <param name="head"></param>
-    void free_atmosphere(planet_record head)
+    private void free_atmosphere(planet_record head)
     {
       planet_record node;
       /*
@@ -2155,7 +2378,7 @@ namespace Starcreate
     /// <param name="e"></param>
     private void CreateSystemForm_Load(object sender, EventArgs e)
     {
-      this.BackColor = Color.Black;
+      BackColor = Color.Black;
       labelEccentricityCoeff.ForeColor = Color.White;
       numericUpDownEccentricityCoeff.Value = (decimal)ECCENTRICITY_COEFF;
     }
